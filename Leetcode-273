@@ -1,0 +1,38 @@
+class Solution {
+public:
+    string word(vector<string>& words,int x){
+        string ans="";
+        if (x>0 and x<=20)return (words[x]+" ");
+        else if (x>20 and x<100){
+            ans += words[18+x/10]+" ";
+            if (x%10 != 0)ans = ans+words[x%10]+" ";
+        }
+        else {
+            if (x/100 != 0)ans += words[x/100] + " Hundred ";
+            x = x% 100;
+            if (x>0 and x<=20)ans += words[x] +" ";
+            if (x>20 and x<100){
+                ans += words[18+x/10]+" ";
+                if (x%10 != 0)ans = ans+words[x%10]+" ";
+            }
+        }
+        return ans;
+    }
+    string numberToWords(int num) {
+        string ans ="";
+        int i=0;
+        vector<string> words = {"Zero","One","Two","Three","Four","Five","Six","Seven","Eight","Nine","Ten","Eleven","Twelve","Thirteen","Fourteen","Fifteen","Sixteen","Seventeen","Eighteen","Nineteen","Twenty","Thirty","Forty","Fifty","Sixty","Seventy","Eighty","Ninety"};
+        if (!num)return "Zero";
+        while (num > 0){
+            string temp = word(words,num%1000);
+            if (i == 0)ans = temp + ans;
+            if (i == 1 and num%1000 != 0)ans = temp + "Thousand " + ans;
+            if (i == 2 and num%1000 != 0)ans = temp + "Million " + ans;
+            if (i == 3)ans = temp + "Billion " + ans;
+            i++;
+            num /= 1000;
+        }
+        ans.erase(ans.size()-1);
+        return ans;
+    }
+};
